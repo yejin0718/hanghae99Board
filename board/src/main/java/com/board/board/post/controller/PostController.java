@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/post")
@@ -18,8 +20,8 @@ public class PostController {
     private final PostService postService;
     @GetMapping
     public ResponseEntity<ResponseMessage> getPostList(){
-        PostResponseDto postResponseDto = postService.getPostList();
-        ResponseMessage responseMessage = new ResponseMessage( "전체 게시글 목록 조회 성공", 200, postResponseDto);
+        List<PostResponseDto> postResponseDtoList = postService.getPostList();
+        ResponseMessage responseMessage = new ResponseMessage( "전체 게시글 목록 조회 성공", 200, postResponseDtoList);
         return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
     @GetMapping("/{postId}")
