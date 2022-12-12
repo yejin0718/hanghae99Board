@@ -9,4 +9,6 @@ import lombok.Setter;
 public class MemberRequestDto {
     private String username;
     private String password;
+    private boolean isAdmin;
+    private String adminCode = "";
 }
