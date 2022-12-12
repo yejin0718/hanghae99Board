@@ -1,4 +1,4 @@
 package com.board.board.post.service;
 
-public class PostService {
+public interface PostService {
 }
