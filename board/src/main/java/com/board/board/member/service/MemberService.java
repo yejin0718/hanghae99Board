@@ -1,7 +1,6 @@
 package com.board.board.member.service;
 
 
-import com.board.board.global.jwt.JwtUtil;
 import com.board.board.member.entity.Member;
 import com.board.board.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

@@ -18,7 +18,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public String login(@RequestBody MemberRequestDto memberRequestDto){
-        memberService.login(memberRequestDto.getUsername(), memberRequestDto.getPassword());
-        return null;
+
+        return memberService.login(memberRequestDto.getUsername(), memberRequestDto.getPassword());
     }
 }
