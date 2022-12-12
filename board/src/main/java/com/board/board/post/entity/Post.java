@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
-
-import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -18,15 +15,22 @@ public class Post extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    /* Member가 추가되면 밑에 있는 연관관계로 바꾸기 */
+    /* 그 전까진 username = "test" 로 테스트 */
+    @Column(nullable = false)
+    private String username;
 
     @Column(nullable =false)
     private String title;
 
     @Column(nullable = false)
     private String content;
+
+    /*
+     *@ManyToOne(fetch = LAZY)
+     *@JoinColumn(name = "member_id")
+     *private Member member;
+     */
 
     /* 연관관계 매서드 추가할 것 */
 
