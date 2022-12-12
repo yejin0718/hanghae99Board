@@ -32,8 +32,7 @@ public class PostServiceImpl implements PostService{
     @Override
     @Transactional(readOnly = true)
     public PostResponseDto getPostInfo(Long postId) {
-        Post post = checkPost(postId);
-        return new PostResponseDto(post);
+        return new PostResponseDto(checkPost(postId));
     }
 
     @Override

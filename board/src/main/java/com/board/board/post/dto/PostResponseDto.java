@@ -17,8 +17,7 @@ public class PostResponseDto {
     public PostResponseDto(Post post){
         this.title = post.getTitle();
         this.content = post.getContent();
-        /* Member 만들면 Member에서 가져올 것 */
-        this.username = post.getUsername();
+        this.username = post.getMember().getUsername();
         this.createdAt = post.getCreatedAt();
     }
 
