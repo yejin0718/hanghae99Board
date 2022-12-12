@@ -6,10 +6,7 @@ import com.board.board.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +27,15 @@ public class PostController {
 
 
     }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<ResponseMessage> deletePost(@PathVariable Long postId) {
+        PostResponseDto postResponseDto = postService.deletePost(postId);
+        ResponseMessage responseMessage = new ResponseMessage("게시글 삭제 성공", 200, postResponseDto);
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
+
+
 }
     /*
     예제

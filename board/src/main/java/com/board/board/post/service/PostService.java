@@ -9,4 +9,6 @@ public interface PostService {
 
     public PostResponseDto getPostInfo(Long postId);
 
+    public PostResponseDto deletePost(Long postId);
+
 }

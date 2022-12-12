@@ -1,5 +1,6 @@
 package com.board.board.post.service;
 
+import com.board.board.global.config.UserRoleEnum;
 import com.board.board.post.dto.PostResponseDto;
 import com.board.board.post.entity.Post;
 import com.board.board.post.repository.PostRepository;
@@ -38,12 +39,15 @@ public class PostServiceImpl implements PostService{
         return new PostResponseDto(post);
     }
 
-
-
-
-
-
-
+    @Override
+    @Transactional
+    public PostResponseDto deletePost(Long postId) {
+        Post post = checkPost(postId);
+        /* userRole */
+        // ADMIN, USER 에 따른 게시글 삭제 분기 로직 구현하기
+        postRepository.delete(post);
+        return new PostResponseDto(post);
+    }
 
     private Post checkPost (Long id){
         return postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시물이 존재하지 않습니다."));
