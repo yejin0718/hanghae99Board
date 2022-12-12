@@ -18,18 +18,15 @@ public class PostServiceImpl implements PostService{
     @Override
     @Transactional(readOnly = true)
     public List<PostResponseDto> getPostList() {
-        List<PostResponseDto> forumResponseList = new ArrayList<>();
+        List<PostResponseDto> postResponseList = new ArrayList<>();
         List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
         for(Post post : posts){
             PostResponseDto postResponseDto = new PostResponseDto(post);
-            forumResponseList.add(postResponseDto);
+            postResponseList.add(postResponseDto);
         }
 
-        return forumResponseList;
+        return postResponseList;
     }
-
-
-
 
     @Override
     @Transactional(readOnly = true)
