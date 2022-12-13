@@ -42,7 +42,7 @@ public class PostController {
     예제
     @PostMapping
     public ResponseEntity<ResponseMessage> test(){
-    PostResponseDto postResponseDto = new PostResponseDto();
+    PostResponseDto postResponseDto = postService.someMethod();
     ResponseMessage responseMessage = new ResponseMessage("실행",200, postResponseDto);
     return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
