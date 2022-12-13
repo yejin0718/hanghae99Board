@@ -48,8 +48,9 @@ public class PostServiceImpl implements PostService{
 
         Member member = memberRepository.findByUsername(username).orElseThrow(()->new IllegalArgumentException("로그인이 필요합니다."));
         Post post = requestDto.toEntity();
-        post.changeMember(member);
 
+        post.changeMember(member);
+        member.addPostList(post);
         postRepository.save(post);
 
         return new PostResponseDto(post);
@@ -58,9 +59,12 @@ public class PostServiceImpl implements PostService{
     //수정
     @Override
     @Transactional
-    public PostResponseDto editPost(Long postId, PostRequestDto requestDto){
+    public PostResponseDto editPost(Long postId, PostRequestDto requestDto, Member member){
         Post post = checkPost(postId);
+        String username = member.getUsername();
+        UserRoleEnum role = member.getRole();
 
+        checkRole(post, role, username);
         //본인이 작성한 메모인지 확인
 
         /* userRole */
@@ -69,8 +73,6 @@ public class PostServiceImpl implements PostService{
         String title = requestDto.getTitle();
         String content = requestDto.getContent();
 
-        System.out.println("title = " + title);
-        System.out.println("content = " + content);
 
         post.update(title, content);
         return new PostResponseDto(post);

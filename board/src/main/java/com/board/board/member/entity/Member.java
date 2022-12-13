@@ -1,6 +1,7 @@
 package com.board.board.member.entity;
 
 
+import com.board.board.comment.entity.Comment;
 import com.board.board.global.config.UserRoleEnum;
 import com.board.board.post.entity.Post;
 import lombok.Getter;
@@ -31,21 +32,25 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-    //이후 연관관계 시 사용
     @OneToMany(mappedBy = "member")
     private List<Post> postList = new ArrayList<>();
 
-    public void addPostList(Post post){
-        this.postList.add(post);
-//        post.setMember(this);
-    }
-//
-//    @OneToMany
-//    private ArrayList<Comment> commentList;
+    @OneToMany(mappedBy = "member")
+    private List<Comment> commentList = new ArrayList<>();
+
 
     public Member(String username, String password, UserRoleEnum role) {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    /* 연관관계 편의 메서드 */
+    public void addPostList(Post post){
+        this.postList.add(post);
+    }
+
+    public void addCommentList(Comment comment){
+        this.commentList.add(comment);
     }
 }
