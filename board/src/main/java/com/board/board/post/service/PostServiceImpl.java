@@ -20,7 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService{
     private final PostRepository postRepository;
-
     private final MemberRepository memberRepository;
 
     /* 전체 게시물 목록 조회 */
@@ -82,9 +81,22 @@ public class PostServiceImpl implements PostService{
     @Transactional
     public PostResponseDto deletePost(Long postId) {
         Post post = checkPost(postId);
-        /* userRole */
-        // ADMIN, USER 에 따른 게시글 삭제 분기 로직 구현하기
+
+        // 51 ~ 59 라인 계속 수정될 부분
+        // 멤버 dto 에서 username 꺼내와서 post.getUsername 과 일단 비교 진행
+        // 추후에 다시 바꿀 예정
+        MemberRequestDto memberRequestDto = new MemberRequestDto();
+        String username = memberRequestDto.getUsername();
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+
+        // 게시글 username 과 회원의 username 다르면서, role != admin 이 아닐 경우 => 삭제 권한 없음.
+//        if (!(post.getUsername().equals(member.getUsername()) && member.getRole() != UserRoleEnum.ADMIN)) {
+//            throw new IllegalArgumentException("삭제 권한이 없습니다.");
+//        }
+
         postRepository.delete(post);
+
         return new PostResponseDto(post);
     }
 
