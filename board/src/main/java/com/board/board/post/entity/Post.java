@@ -26,12 +26,22 @@ public class Post extends Timestamped {
     private String content;
 
 
+
+    public Post(String title, String content, String username){
+        this.title = title;
+        this.content = content;
+        this.username = username;
+    }
+
      @ManyToOne(fetch = LAZY)
      @JoinColumn(name = "member_id")
      private Member member;
 
+
     /* 연관관계 편의 매서드 추가할 것 */
 
-
-
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
