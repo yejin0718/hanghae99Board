@@ -46,10 +46,9 @@ public class Post extends Timestamped {
         member.addPostList(this);
     }
 
-    public void update(Post editPost) {
-        this.title = editPost.getTitle();
-        this.content = editPost.getContent();
-        member.addPostList(this);
-    }
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
