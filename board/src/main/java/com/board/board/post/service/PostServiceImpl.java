@@ -1,6 +1,9 @@
 package com.board.board.post.service;
 
 import com.board.board.global.config.UserRoleEnum;
+import com.board.board.member.dto.MemberRequestDto;
+import com.board.board.member.entity.Member;
+import com.board.board.member.repository.MemberRepository;
 import com.board.board.post.dto.PostRequestDto;
 
 import com.board.board.post.dto.PostResponseDto;
@@ -17,6 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService{
     private final PostRepository postRepository;
+
+    private final MemberRepository memberRepository;
 
     /* 전체 게시물 목록 조회 */
     @Override
@@ -40,14 +45,14 @@ public class PostServiceImpl implements PostService{
     //작성
     @Override
     @Transactional
-    public PostResponseDto writePost(PostRequestDto requestDto){
-        String title = requestDto.getTitle();
-        String content = requestDto.getContent();
-        String username = "test";
+    public PostResponseDto writePost(PostRequestDto requestDto, String username){
 
-        Post post = new Post(title, content, username);
+        Member member = memberRepository.findByUsername(username).orElseThrow(()->new IllegalArgumentException("로그인이 필요합니다."));
+        Post post = requestDto.toEntity();
+        post.changeMember(member);
 
         postRepository.save(post);
+
         return new PostResponseDto(post);
     }
 

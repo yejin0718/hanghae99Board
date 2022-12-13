@@ -1,6 +1,7 @@
 package com.board.board.post.controller;
 
 import com.board.board.global.ResponseMessage;
+import com.board.board.global.security.MemberDetailsImpl;
 import com.board.board.post.dto.PostRequestDto;
 import com.board.board.post.dto.PostResponseDto;
 import com.board.board.post.dto.PostResponseListDto;
@@ -8,6 +9,7 @@ import com.board.board.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,8 +34,12 @@ public class PostController {
 
     //작성
     @PostMapping
-    public ResponseEntity<ResponseMessage> writePost(@RequestBody PostRequestDto requestDto){
-        PostResponseDto postResponseDto = postService.writePost(requestDto);
+    public ResponseEntity<ResponseMessage> writePost(
+            @RequestBody PostRequestDto requestDto,
+            @AuthenticationPrincipal MemberDetailsImpl memberDetails){
+        PostResponseDto postResponseDto = postService.writePost(requestDto, memberDetails.getUsername());
+        memberDetails.getMember().getRole();
+        memberDetails.getMember().getPostList();
         ResponseMessage responseMessage = new ResponseMessage("게시글 작성 성공", 200, postResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
@@ -41,6 +47,8 @@ public class PostController {
     //수정
     @PatchMapping("/{postId}")
     public ResponseEntity<ResponseMessage> editPost(@PathVariable Long postId, @RequestBody PostRequestDto requestDto){
+
+
         System.out.println("requestDto.getTitle() = " + requestDto.getTitle());
         System.out.println("requestDto.getContent() = " + requestDto.getContent());
         PostResponseDto postResponseDto = postService.editPost(postId, requestDto);

@@ -5,11 +5,14 @@ import com.board.board.global.config.UserRoleEnum;
 import com.board.board.post.entity.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @NoArgsConstructor
 @Entity
+@Setter
 @Getter
 public class Member {
 
@@ -28,8 +31,13 @@ public class Member {
     private UserRoleEnum role;
 
     //이후 연관관계 시 사용
-//    @OneToMany
-//    private ArrayList<Post> postList;
+    @OneToMany
+    private ArrayList<Post> postList = new ArrayList<>();
+
+    public void addPostList(Post post){
+        this.postList.add(post);
+//        post.setMember(this);
+    }
 //
 //    @OneToMany
 //    private ArrayList<Comment> commentList;
