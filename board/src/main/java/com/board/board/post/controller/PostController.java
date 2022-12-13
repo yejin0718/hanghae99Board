@@ -1,6 +1,7 @@
 package com.board.board.post.controller;
 
 import com.board.board.global.ResponseMessage;
+import com.board.board.global.config.UserRoleEnum;
 import com.board.board.global.security.MemberDetailsImpl;
 import com.board.board.post.dto.PostRequestDto;
 import com.board.board.post.dto.PostResponseDto;
@@ -59,8 +60,14 @@ public class PostController {
     //수
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<ResponseMessage> deletePost(@PathVariable Long postId) {
-        PostResponseDto postResponseDto = postService.deletePost(postId);
+    public ResponseEntity<ResponseMessage> deletePost(
+            @PathVariable Long postId,
+            @AuthenticationPrincipal MemberDetailsImpl memberDetails
+    ) {
+        String username = memberDetails.getUsername();
+        UserRoleEnum role = memberDetails.getMember().getRole();
+
+        PostResponseDto postResponseDto = postService.deletePost(postId, username, role);
         ResponseMessage responseMessage = new ResponseMessage("게시글 삭제 성공", 200, postResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }

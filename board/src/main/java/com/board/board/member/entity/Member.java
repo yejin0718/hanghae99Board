@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Entity
@@ -31,8 +32,8 @@ public class Member {
     private UserRoleEnum role;
 
     //이후 연관관계 시 사용
-    @OneToMany
-    private ArrayList<Post> postList = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<Post> postList = new ArrayList<>();
 
     public void addPostList(Post post){
         this.postList.add(post);

@@ -79,28 +79,29 @@ public class PostServiceImpl implements PostService{
 
     @Override
     @Transactional
-    public PostResponseDto deletePost(Long postId) {
+    public PostResponseDto deletePost(Long postId, String username, UserRoleEnum role) {
+        //게시물 확인
         Post post = checkPost(postId);
-
-        // 51 ~ 59 라인 계속 수정될 부분
-        // 멤버 dto 에서 username 꺼내와서 post.getUsername 과 일단 비교 진행
-        // 추후에 다시 바꿀 예정
-        MemberRequestDto memberRequestDto = new MemberRequestDto();
-        String username = memberRequestDto.getUsername();
-        Member member = memberRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
-
-        // 게시글 username 과 회원의 username 다르면서, role != admin 이 아닐 경우 => 삭제 권한 없음.
-//        if (!(post.getUsername().equals(member.getUsername()) && member.getRole() != UserRoleEnum.ADMIN)) {
-//            throw new IllegalArgumentException("삭제 권한이 없습니다.");
-//        }
+        //권한 확인
+        checkRole(post, role, username);
 
         postRepository.delete(post);
 
         return new PostResponseDto(post);
     }
 
-    private Post checkPost (Long id){
-        return postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시물이 존재하지 않습니다."));
+    private Post checkPost(Long postId){
+        return postRepository.findById(postId).orElseThrow(
+                ()-> new IllegalArgumentException("존재하지 않은 게시물입니다.")
+        );
     }
+
+    private void checkRole(Post post, UserRoleEnum role, String username){
+        if(role != UserRoleEnum.ADMIN){
+            if(!post.getMember().getUsername().equals(username)){
+                throw new IllegalArgumentException("게시물의 권한이 없습니다.");
+            }
+        }
+    }
+
 }

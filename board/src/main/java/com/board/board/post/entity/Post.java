@@ -30,7 +30,7 @@ public class Post extends Timestamped {
     private String content;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
+//    @JoinColumn(name = "member_id")
     private Member member;
 
 

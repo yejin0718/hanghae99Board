@@ -38,14 +38,14 @@ public class MemberController {
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
-//    @GetMapping("/test")
-//    public String test(@AuthenticationPrincipal MemberDetailsImpl memberDetails){
-//        //위에 @AuthenticationPrincipal를 통해 해당 요청에 대해 Security를 거친다. 이때 Filter를 거치면서 나오는 memberDetails에 유저 정보가 들어가 있다.
-//
-//        memberDetails.getMember(); //Member객체
-//        memberDetails.getUsername(); //username 필드
-//        return "성공";
-//    }
+    @GetMapping("/test")
+    public String test(@AuthenticationPrincipal MemberDetailsImpl memberDetails){
+        //위에 @AuthenticationPrincipal를 통해 해당 요청에 대해 Security를 거친다. 이때 Filter를 거치면서 나오는 memberDetails에 유저 정보가 들어가 있다.
+
+        System.out.println(memberDetails.getMember());; //Member객체
+
+        return "성공";
+    }
     //현재 위 함수의 경우 현재 url 즉, "/member"이 모두 허용되어있기 때문에 로그인이 안되어도 접속이 가능해 오류가 난다.
     //다른곳에서 사용하면 괜찮다.
 }
