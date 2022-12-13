@@ -2,14 +2,15 @@ package com.board.board.post.service;
 
 import com.board.board.global.config.UserRoleEnum;
 import com.board.board.post.dto.PostRequestDto;
+
 import com.board.board.post.dto.PostResponseDto;
+import com.board.board.post.dto.PostResponseListDto;
 import com.board.board.post.entity.Post;
 import com.board.board.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,24 +18,23 @@ import java.util.List;
 public class PostServiceImpl implements PostService{
     private final PostRepository postRepository;
 
+    /* 전체 게시물 목록 조회 */
     @Override
     @Transactional(readOnly = true)
-    public List<PostResponseDto> getPostList() {
-        List<PostResponseDto> postResponseList = new ArrayList<>();
+    public PostResponseListDto getPostList() {
+        PostResponseListDto postResponseListDto = new PostResponseListDto();
         List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
-        for(Post post : posts){
-            PostResponseDto postResponseDto = new PostResponseDto(post);
-            postResponseList.add(postResponseDto);
+        for(Post post : posts) {
+            postResponseListDto.addPost(new PostResponseDto(post));
         }
-
-        return postResponseList;
+        return postResponseListDto;
     }
 
+    /* 게시물 상세 조회 */
     @Override
     @Transactional(readOnly = true)
     public PostResponseDto getPostInfo(Long postId) {
-        Post post = checkPost(postId);
-        return new PostResponseDto(post);
+        return new PostResponseDto(checkPost(postId));
     }
 
     //작성

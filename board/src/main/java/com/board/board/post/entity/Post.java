@@ -1,10 +1,13 @@
 package com.board.board.post.entity;
 
 import com.board.board.global.Timestamped;
+import com.board.board.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -15,10 +18,6 @@ public class Post extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /* Member가 추가되면 밑에 있는 연관관계로 바꾸기 */
-    /* 그 전까진 username = "test" 로 테스트 */
-    @Column(nullable = false)
-    private String username;
 
     @Column(nullable =false)
     private String title;
@@ -26,13 +25,7 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private String content;
 
-    /*
-     *@ManyToOne(fetch = LAZY)
-     *@JoinColumn(name = "member_id")
-     *private Member member;
-     */
 
-    /* 연관관계 매서드 추가할 것 */
 
     public Post(String title, String content, String username){
         this.title = title;
@@ -40,6 +33,12 @@ public class Post extends Timestamped {
         this.username = username;
     }
 
+     @ManyToOne(fetch = LAZY)
+     @JoinColumn(name = "member_id")
+     private Member member;
+
+
+    /* 연관관계 편의 매서드 추가할 것 */
 
     public void update(String title, String content) {
         this.title = title;
