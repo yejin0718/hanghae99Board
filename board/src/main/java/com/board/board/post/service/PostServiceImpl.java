@@ -1,11 +1,9 @@
 package com.board.board.post.service;
 
 import com.board.board.global.config.UserRoleEnum;
-import com.board.board.member.dto.MemberRequestDto;
 import com.board.board.member.entity.Member;
 import com.board.board.member.repository.MemberRepository;
 import com.board.board.post.dto.PostRequestDto;
-
 import com.board.board.post.dto.PostResponseDto;
 import com.board.board.post.dto.PostResponseListDto;
 import com.board.board.post.entity.Post;
@@ -38,7 +36,8 @@ public class PostServiceImpl implements PostService{
     @Override
     @Transactional(readOnly = true)
     public PostResponseDto getPostInfo(Long postId) {
-        return new PostResponseDto(checkPost(postId));
+        Post post = checkPost(postId);
+        return new PostResponseDto(post);
     }
 
     //작성
