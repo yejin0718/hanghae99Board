@@ -3,12 +3,14 @@ package com.board.board.comment.entity;
 import com.board.board.global.Timestamped;
 import com.board.board.member.entity.Member;
 import com.board.board.post.entity.Post;
+import lombok.Getter;
 
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
+@Getter
 public class Comment extends Timestamped {
     @Id
     @GeneratedValue
