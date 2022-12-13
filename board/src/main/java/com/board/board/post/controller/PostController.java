@@ -47,12 +47,11 @@ public class PostController {
 
     //수정
     @PatchMapping("/{postId}")
-    public ResponseEntity<ResponseMessage> editPost(@PathVariable Long postId, @RequestBody PostRequestDto requestDto){
+    public ResponseEntity<ResponseMessage> editPost(@PathVariable Long postId, @RequestBody PostRequestDto requestDto, @AuthenticationPrincipal MemberDetailsImpl memberDetails){
+        String username = memberDetails.getUsername();
+        UserRoleEnum role = memberDetails.getMember().getRole();
 
-
-        System.out.println("requestDto.getTitle() = " + requestDto.getTitle());
-        System.out.println("requestDto.getContent() = " + requestDto.getContent());
-        PostResponseDto postResponseDto = postService.editPost(postId, requestDto);
+        PostResponseDto postResponseDto = postService.editPost(postId, requestDto, username, role);
         ResponseMessage responseMessage = new ResponseMessage("게시글 수정 성공", 200, postResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }

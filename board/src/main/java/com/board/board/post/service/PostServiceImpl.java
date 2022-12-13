@@ -58,21 +58,15 @@ public class PostServiceImpl implements PostService{
     //수정
     @Override
     @Transactional
-    public PostResponseDto editPost(Long postId, PostRequestDto requestDto){
+    public PostResponseDto editPost(Long postId, PostRequestDto requestDto, String username, UserRoleEnum role){
+        //게시물 확인
         Post post = checkPost(postId);
+        //권한 확인
+        checkRole(post, role, username);
 
-        //본인이 작성한 메모인지 확인
+        Post editPost = requestDto.toEntity();
 
-        /* userRole */
-        // ADMIN, USER 에 따른 게시글 삭제 분기 로직 구현하기
-
-        String title = requestDto.getTitle();
-        String content = requestDto.getContent();
-
-        System.out.println("title = " + title);
-        System.out.println("content = " + content);
-
-        post.update(title, content);
+        post.update(editPost);
         return new PostResponseDto(post);
 
     }

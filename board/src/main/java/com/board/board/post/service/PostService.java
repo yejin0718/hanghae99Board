@@ -14,5 +14,5 @@ public interface PostService {
 
     public PostResponseDto writePost(PostRequestDto requestDto, String username);
 
-    PostResponseDto editPost(Long postId, PostRequestDto requestDto);
+    PostResponseDto editPost(Long postId, PostRequestDto requestDto, String username, UserRoleEnum role);
 }
