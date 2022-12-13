@@ -9,6 +9,7 @@ import com.board.board.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,7 +21,9 @@ public class MemberService {
     private final JwtUtil jwtUtil;
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     private final MemberRepository memberRepository;
-    public String login(MemberRequestDto memberRequestDto, HttpServletResponse response) {
+
+   @Transactional(readOnly = true)
+    public String login(MemberRequestDto memberRequestDto) {
 
         String username = memberRequestDto.getUsername();
         String password = memberRequestDto.getPassword();
@@ -32,12 +35,13 @@ public class MemberService {
             throw new IllegalArgumentException("틀린 비밀번호 입니다.");
         }
 
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(member.getUsername(), member.getRole()));
-        return member.getUsername();
+
+        return jwtUtil.createToken(member.getUsername(), member.getRole());
 
     }
 
-    public String signup(MemberRequestDto memberRequestDto) {
+    @Transactional
+    public void signup(MemberRequestDto memberRequestDto) {
         String username = memberRequestDto.getUsername();
         String password = passwordEncoder.encode(memberRequestDto.getPassword());
 
@@ -56,8 +60,5 @@ public class MemberService {
 
         Member memberTemp = memberRepository.save(member);
 
-
-
-        return memberTemp.getUsername();
     }
 }

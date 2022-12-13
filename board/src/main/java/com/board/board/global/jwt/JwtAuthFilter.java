@@ -30,7 +30,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String token = jwtUtil.resolveToken(request);
-        System.out.println(token);
 
         if(token != null) { //모든 URI가 허가가 되어있는 것이 아니기 때문에 인증이 필요가 없는 곳에는 토큰이 없기 때문에 이를 이용해 구분
             if(!jwtUtil.validateToken(token)){
@@ -38,7 +37,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 return;
             }
             Claims info = jwtUtil.getUserInfoFromToken(token);
-            setAuthentication(info.getSubject());
+            setAuthentication(info.getSubject()); //여기서 username을 세팅
         }
         filterChain.doFilter(request,response);
     }
@@ -47,7 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication = jwtUtil.createAuthentication(username);
         context.setAuthentication(authentication);
-        SecurityContextHolder.setContext(context);
+        SecurityContextHolder.setContext(context); //개인정보를 저장하는 SecurityContextHolder에 저장
     }
 
     public void jwtExceptionHandler(HttpServletResponse response, String msg, int statusCode) {

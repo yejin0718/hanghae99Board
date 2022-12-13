@@ -45,15 +45,16 @@ public class WebSecurityConfig {
         // 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //session 정책을 Stateless로
 
-        http.authorizeRequests().antMatchers("/member/**").permitAll() //로그인 url 허용
-                .antMatchers("/post/**").permitAll() //post관련 모두 허용
+        http.authorizeRequests().antMatchers("/member/**").permitAll() //유저 관련 url 허용
+                .antMatchers("/post/**").permitAll() //게시물 관련 url 모두 허용
 //                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 // JWT 인증/인가를 사용하기 위한 설정
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                //위 코드의 경우 로그인을 확인하는 UsernamePasswordAuthenticationFilter 이전에 JwtAuthFilter를 먼저 하겠다.
 
 
-        http.formLogin().loginPage("/member/login-page").permitAll();
+        http.formLogin().loginPage("/member/login").permitAll(); //로그인이 안돼서 인증이 안되었을 경우 "/member/login-page" 이페이지로 리턴
 
         http.exceptionHandling().accessDeniedPage("/member/forbidden");
 

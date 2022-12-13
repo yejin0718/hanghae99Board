@@ -27,12 +27,12 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-
+    //이후 연관관계 시 사용
 //    @OneToMany
-//    private Post post;
+//    private ArrayList<Post> postList;
 //
 //    @OneToMany
-//    private Comment comment;
+//    private ArrayList<Comment> commentList;
 
     public Member(String username, String password, UserRoleEnum role) {
         this.username = username;
