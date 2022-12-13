@@ -34,8 +34,15 @@ public class Post extends Timestamped {
 
     /* 연관관계 매서드 추가할 것 */
 
+    public Post(String title, String content, String username){
+        this.title = title;
+        this.content = content;
+        this.username = username;
+    }
 
 
-
-
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

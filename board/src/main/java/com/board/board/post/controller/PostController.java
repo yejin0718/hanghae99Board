@@ -1,6 +1,7 @@
 package com.board.board.post.controller;
 
 import com.board.board.global.ResponseMessage;
+import com.board.board.post.dto.PostRequestDto;
 import com.board.board.post.dto.PostResponseDto;
 import com.board.board.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,26 @@ public class PostController {
 
 
     }
+
+    //작성
+    @PostMapping
+    public ResponseEntity<ResponseMessage> writePost(@RequestBody PostRequestDto requestDto){
+        PostResponseDto postResponseDto = postService.writePost(requestDto);
+        ResponseMessage responseMessage = new ResponseMessage("게시글 작성 성공", 200, postResponseDto);
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
+
+    //수정
+    @PatchMapping("/{postId}")
+    public ResponseEntity<ResponseMessage> editPost(@PathVariable Long postId, @RequestBody PostRequestDto requestDto){
+        System.out.println("requestDto.getTitle() = " + requestDto.getTitle());
+        System.out.println("requestDto.getContent() = " + requestDto.getContent());
+        PostResponseDto postResponseDto = postService.editPost(postId, requestDto);
+        ResponseMessage responseMessage = new ResponseMessage("게시글 수정 성공", 200, postResponseDto);
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
+
+    //수
 
     @DeleteMapping("/{postId}")
     public ResponseEntity<ResponseMessage> deletePost(@PathVariable Long postId) {

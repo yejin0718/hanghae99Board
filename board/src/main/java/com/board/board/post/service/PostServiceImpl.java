@@ -1,6 +1,7 @@
 package com.board.board.post.service;
 
 import com.board.board.global.config.UserRoleEnum;
+import com.board.board.post.dto.PostRequestDto;
 import com.board.board.post.dto.PostResponseDto;
 import com.board.board.post.entity.Post;
 import com.board.board.post.repository.PostRepository;
@@ -34,6 +35,42 @@ public class PostServiceImpl implements PostService{
     public PostResponseDto getPostInfo(Long postId) {
         Post post = checkPost(postId);
         return new PostResponseDto(post);
+    }
+
+    //작성
+    @Override
+    @Transactional
+    public PostResponseDto writePost(PostRequestDto requestDto){
+        String title = requestDto.getTitle();
+        String content = requestDto.getContent();
+        String username = "test";
+
+        Post post = new Post(title, content, username);
+
+        postRepository.save(post);
+        return new PostResponseDto(post);
+    }
+
+    //수정
+    @Override
+    @Transactional
+    public PostResponseDto editPost(Long postId, PostRequestDto requestDto){
+        Post post = checkPost(postId);
+
+        //본인이 작성한 메모인지 확인
+
+        /* userRole */
+        // ADMIN, USER 에 따른 게시글 삭제 분기 로직 구현하기
+
+        String title = requestDto.getTitle();
+        String content = requestDto.getContent();
+
+        System.out.println("title = " + title);
+        System.out.println("content = " + content);
+
+        post.update(title, content);
+        return new PostResponseDto(post);
+
     }
 
     @Override
