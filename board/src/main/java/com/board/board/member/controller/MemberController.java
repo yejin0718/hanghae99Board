@@ -1,13 +1,18 @@
 package com.board.board.member.controller;
 
 
+import com.board.board.global.ResponseMessage;
+import com.board.board.global.jwt.JwtUtil;
+import com.board.board.global.security.MemberDetailsImpl;
 import com.board.board.member.dto.MemberRequestDto;
 import com.board.board.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,12 +22,30 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/login")
-    public String login(@RequestBody MemberRequestDto memberRequestDto){
-        return memberService.login(memberRequestDto);
+    public ResponseEntity<ResponseMessage> login(@RequestBody MemberRequestDto memberRequestDto, HttpServletResponse response){
+        String token = memberService.login(memberRequestDto);
+        ResponseMessage responseMessage = new ResponseMessage("로그인 성공", 200, token);
+
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
+
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
     @PostMapping("/signup")
-    public String signup(@RequestBody MemberRequestDto memberRequestDto){
-        return memberService.signup(memberRequestDto);
+    public ResponseEntity<ResponseMessage> signup(@RequestBody MemberRequestDto memberRequestDto){
+        memberService.signup(memberRequestDto);
+        ResponseMessage responseMessage = new ResponseMessage("회원가입 성공", 200, null);
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
+
+//    @GetMapping("/test")
+//    public String test(@AuthenticationPrincipal MemberDetailsImpl memberDetails){
+//        //위에 @AuthenticationPrincipal를 통해 해당 요청에 대해 Security를 거친다. 이때 Filter를 거치면서 나오는 memberDetails에 유저 정보가 들어가 있다.
+//
+//        memberDetails.getMember(); //Member객체
+//        memberDetails.getUsername(); //username 필드
+//        return "성공";
+//    }
+    //현재 위 함수의 경우 현재 url 즉, "/member"이 모두 허용되어있기 때문에 로그인이 안되어도 접속이 가능해 오류가 난다.
+    //다른곳에서 사용하면 괜찮다.
 }
