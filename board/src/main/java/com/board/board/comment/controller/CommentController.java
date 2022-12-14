@@ -35,13 +35,13 @@ public class CommentController {
 
     }
 
-    @PostMapping("/{postId}/comment/{commentId}")
+    @PatchMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<ResponseMessage> editComment(
             @PathVariable Long postId,
             @PathVariable Long commentId,
             @RequestBody CommentRequestDto requestDto,
             @AuthenticationPrincipal MemberDetailsImpl memberDetails){
-        CommentResponseDto commentResponseDto = commentService.editComment(postId, commentId, requestDto, memberDetails.getMember());
+        CommentResponseDto commentResponseDto = commentService.editComment(postId, commentId, requestDto);
 
         ResponseMessage responseMessage = new ResponseMessage("댓글 수정 성공", 200, commentResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);

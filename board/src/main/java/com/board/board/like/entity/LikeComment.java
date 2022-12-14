@@ -8,7 +8,6 @@ import javax.persistence.Id;
 
 @Entity
 public class LikeComment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

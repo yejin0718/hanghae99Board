@@ -7,13 +7,13 @@ import com.board.board.post.dto.PostResponseDto;
 import com.board.board.post.dto.PostResponseListDto;
 
 public interface PostService {
-    public PostResponseListDto getPostList();
+    PostResponseListDto getPostList();
 
-    public PostResponseDto getPostInfo(Long postId);
+    PostResponseDto getPostInfo(Long postId);
 
-    public void deletePost(Long postId, Member member);
+    void deletePost(Long postId, Member member);
 
-    public PostResponseDto writePost(PostRequestDto requestDto, String username);
+    PostResponseDto writePost(PostRequestDto requestDto, String username);
 
     PostResponseDto editPost(Long postId, PostRequestDto requestDto, Member member);
 }

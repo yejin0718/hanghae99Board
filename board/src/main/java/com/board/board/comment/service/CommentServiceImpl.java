@@ -35,10 +35,8 @@ public class CommentServiceImpl implements CommentService{
         commentRepository.save(comment);
 
         //post 찾기
-        Post post = postRepository.findById(postId).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않은 게시물입니다")
-        );
-//        Post post = checkPost(postId);
+        Post post = checkPost(postId);
+
         //post Entity에 commentList 저장
         post.addComment(comment);
 
@@ -47,7 +45,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
-    public CommentResponseDto editComment(Long postId, Long commentId, CommentRequestDto requestDto, Member member) {
+    public CommentResponseDto editComment(Long postId, Long commentId, CommentRequestDto requestDto) {
 
         //게시글 확인
         Post post = checkPost(postId);
@@ -64,6 +62,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    @Transactional
     public void deleteComment(Long postId, Long commentId, Member member) {
 
         // 게시글 확인
@@ -80,7 +79,7 @@ public class CommentServiceImpl implements CommentService{
         commentRepository.delete(comment);
     }
 
-    /* 유저 권한 체크 메서드 */
+    /* 유저 권한 확인  */
     private void checkRole(Comment comment, UserRoleEnum role, String username) {
         if(role != UserRoleEnum.ADMIN){
             if(!comment.getUsername().equals(username)){
@@ -88,13 +87,13 @@ public class CommentServiceImpl implements CommentService{
             }
         }
     }
-
+    /* 댓글 확인  */
     private Comment checkComment(Long commentId){
         return commentRepository.findById(commentId).orElseThrow(
                 ()-> new IllegalArgumentException("존재하지 않은 댓글입니다.")
         );
     }
-
+    /* 게시글 확인  */
     private Post checkPost(Long postId){
         return postRepository.findById(postId).orElseThrow(
                 ()-> new IllegalArgumentException("존재하지 않은 게시물입니다.")

@@ -36,7 +36,7 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private String username;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "postId")
     private List<Comment> commentList = new ArrayList<>();
 
