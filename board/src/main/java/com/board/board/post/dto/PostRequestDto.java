@@ -11,6 +11,6 @@ public class PostRequestDto {
 
 
     public Post toEntity(String username){
-        return Post.builder().username(username).title(title).content(content).build();
+        return Post.builder().username(username).likeCount(0L).title(title).content(content).build();
     }
 }

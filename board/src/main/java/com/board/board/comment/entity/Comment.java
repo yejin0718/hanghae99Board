@@ -1,8 +1,7 @@
 package com.board.board.comment.entity;
 
 import com.board.board.global.Timestamped;
-import com.board.board.member.entity.Member;
-import com.board.board.post.entity.Post;
+import com.board.board.like.entity.LikeComment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +9,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,5 +31,8 @@ public class Comment extends Timestamped {
 
     @Column(nullable = false)
     private Long likeCount;
+
+    @OneToMany
+    private List<LikeComment> commentLike = new ArrayList<>();
 
 }
