@@ -33,11 +33,15 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private String content;
 
-    @ManyToOne(fetch = LAZY)
-    private Member member;
 
-    @OneToMany(mappedBy = "post")
+    @Column(nullable = false)
+    private String username;
+
+    @OneToMany
     private List<Comment> commentList;
+
+    @Column(nullable = false)
+    private Long likeCount;
 
     public void update(String title, String content) {
         this.title = title;
@@ -45,12 +49,7 @@ public class Post extends Timestamped {
     }
 
     /* 연관관계 편의 메서드 */
-    public void changeMember(Member member){
-        this.member = member;
-        member.addPostList(this);
-    }
-
-    public void addCommentList(Comment comment){
+    public void addComment(Comment comment){
         this.commentList.add(comment);
     }
 

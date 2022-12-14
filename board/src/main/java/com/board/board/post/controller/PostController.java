@@ -17,35 +17,37 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/post")
 public class PostController {
+
     private final PostService postService;
+    /* 전체 게시물 조회 */
     @GetMapping
     public ResponseEntity<ResponseMessage> getPostList(){
         PostResponseListDto postResponseListDto = postService.getPostList();
         ResponseMessage responseMessage = new ResponseMessage( "전체 게시글 목록 조회 성공", 200, postResponseListDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
+
+    /* 상세 게시물 조회 */
     @GetMapping("/{postId}")
     public ResponseEntity<ResponseMessage> getPostInfo(@PathVariable Long postId){
         PostResponseDto postResponseDto = postService.getPostInfo(postId);
         ResponseMessage responseMessage = new ResponseMessage( "상세 게시글 조회 성공", 200, postResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
-
-
     }
 
-    //작성
+    /* 게시물 작성  */
     @PostMapping
     public ResponseEntity<ResponseMessage> writePost(
             @RequestBody PostRequestDto requestDto,
             @AuthenticationPrincipal MemberDetailsImpl memberDetails){
+
         PostResponseDto postResponseDto = postService.writePost(requestDto, memberDetails.getUsername());
-        memberDetails.getMember().getRole();
-        memberDetails.getMember().getPostList();
+
         ResponseMessage responseMessage = new ResponseMessage("게시글 작성 성공", 200, postResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
-    //수정
+    /* 게시물 수정 */
     @PatchMapping("/{postId}")
     public ResponseEntity<ResponseMessage> editPost(
             @PathVariable Long postId,
@@ -58,29 +60,16 @@ public class PostController {
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
-    //수
-
+    /* 게시물 삭제 */
     @DeleteMapping("/{postId}")
     public ResponseEntity<ResponseMessage> deletePost(
             @PathVariable Long postId,
             @AuthenticationPrincipal MemberDetailsImpl memberDetails
     ) {
-        String username = memberDetails.getUsername();
-        UserRoleEnum role = memberDetails.getMember().getRole();
 
-        PostResponseDto postResponseDto = postService.deletePost(postId, username, role);
-        ResponseMessage responseMessage = new ResponseMessage("게시글 삭제 성공", 200, postResponseDto);
+        postService.deletePost(postId, memberDetails.getMember());
+
+        ResponseMessage responseMessage = new ResponseMessage("게시글 삭제 성공", 200, null);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
-
-
 }
-    /*
-    예제
-    @PostMapping
-    public ResponseEntity<ResponseMessage> test(){
-    PostResponseDto postResponseDto = new PostResponseDto();
-    ResponseMessage responseMessage = new ResponseMessage("실행",200, postResponseDto);
-    return new ResponseEntity(responseMessage, HttpStatus.OK);
-    }
-    */

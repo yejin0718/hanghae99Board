@@ -3,7 +3,10 @@ package com.board.board.comment.entity;
 import com.board.board.global.Timestamped;
 import com.board.board.member.entity.Member;
 import com.board.board.post.entity.Post;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -11,6 +14,9 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comment extends Timestamped {
     @Id
     @GeneratedValue
@@ -20,26 +26,10 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String reply;
 
+    @Column(nullable = false)
+    private String username;
 
-    @ManyToOne(fetch=LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-
-    @ManyToOne(fetch=LAZY)
-    @JoinColumn(name="post_id")
-    private Post post;
-
-
-    /* 연관관계 편의 메서드 */
-    public void changeMember(Member member){
-        this.member = member;
-        member.addCommentList(this);
-    }
-
-    public void changePost(Post post){
-        this.post=post;
-        post.addCommentList(this);
-    }
+    @Column(nullable = false)
+    private Long likeCount;
 
 }

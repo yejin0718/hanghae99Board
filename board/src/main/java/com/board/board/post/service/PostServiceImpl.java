@@ -40,66 +40,71 @@ public class PostServiceImpl implements PostService{
         return new PostResponseDto(post);
     }
 
-    //작성
+    /* 게시물 작성 */
     @Override
     @Transactional
     public PostResponseDto writePost(PostRequestDto requestDto, String username){
 
         Member member = memberRepository.findByUsername(username).orElseThrow(()->new IllegalArgumentException("로그인이 필요합니다."));
-        Post post = requestDto.toEntity();
 
-        post.changeMember(member);
-        member.addPostList(post);
+        Post post = requestDto.toEntity(username);//username은 request에 포함이 안되므로 따로 추가해줘야한다.
+
         postRepository.save(post);
 
         return new PostResponseDto(post);
     }
 
-    //수정
+    /* 게시물 수정 */
     @Override
     @Transactional
     public PostResponseDto editPost(Long postId, PostRequestDto requestDto, Member member){
-        Post post = checkPost(postId);
+        /* 유저 인증 정보 */
         String username = member.getUsername();
         UserRoleEnum role = member.getRole();
 
-        checkRole(post, role, username);
-        //본인이 작성한 메모인지 확인
-
-        /* userRole */
-        // ADMIN, USER 에 따른 게시글 삭제 분기 로직 구현하기
-
+        /* 요청 데이터 가져오기 */
         String title = requestDto.getTitle();
         String content = requestDto.getContent();
 
+        Post post = checkPost(postId);
+        checkRole(post, role, username);
 
         post.update(title, content);
+
         return new PostResponseDto(post);
 
     }
 
+    /* 게시물 삭제 */
     @Override
     @Transactional
-    public PostResponseDto deletePost(Long postId, String username, UserRoleEnum role) {
-        //게시물 확인
+    public void deletePost(Long postId, Member member) {
+        /* 유저 인증 정보 */
+        String username = member.getUsername();
+        UserRoleEnum role = member.getRole();
+
         Post post = checkPost(postId);
-        //권한 확인
         checkRole(post, role, username);
 
         postRepository.delete(post);
-
-        return new PostResponseDto(post);
     }
 
+
+
+
+
+
+
+    /* 게시물 확인 */
     private Post checkPost(Long postId){
         return postRepository.findById(postId).orElseThrow(
                 ()-> new IllegalArgumentException("존재하지 않은 게시물입니다.")
         );
     }
-
+    /* 게시물 권환 확인 */
     private void checkRole(Post post, UserRoleEnum role, String username){
         if(role != UserRoleEnum.ADMIN){
-            if(!post.getMember().getUsername().equals(username)){
+            if(!post.getUsername().equals(username)){
                 throw new IllegalArgumentException("게시물의 권한이 없습니다.");
             }
         }

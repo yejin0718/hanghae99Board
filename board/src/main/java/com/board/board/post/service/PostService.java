@@ -11,7 +11,7 @@ public interface PostService {
 
     public PostResponseDto getPostInfo(Long postId);
 
-    public PostResponseDto deletePost(Long postId, String username, UserRoleEnum role);
+    public void deletePost(Long postId, Member member);
 
     public PostResponseDto writePost(PostRequestDto requestDto, String username);
 

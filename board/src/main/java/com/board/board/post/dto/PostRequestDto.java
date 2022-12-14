@@ -9,7 +9,8 @@ public class PostRequestDto {
     private String content;
 
 
-    public Post toEntity(){
-        return Post.builder().title(title).content(content).build();
+
+    public Post toEntity(String username){
+        return Post.builder().username(username).title(title).content(content).build();
     }
 }
