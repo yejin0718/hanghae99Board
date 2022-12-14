@@ -6,23 +6,18 @@ import com.board.board.comment.entity.Comment;
 import com.board.board.comment.repository.CommentRepository;
 import com.board.board.global.config.UserRoleEnum;
 import com.board.board.member.entity.Member;
-import com.board.board.member.repository.MemberRepository;
-import com.board.board.post.dto.PostRequestDto;
-import com.board.board.post.dto.PostResponseDto;
 import com.board.board.post.entity.Post;
 import com.board.board.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
-    private final MemberRepository memberRepository;
     private final PostRepository postRepository;
 
     //댓글 작성
@@ -48,7 +43,7 @@ public class CommentServiceImpl implements CommentService{
     public CommentResponseDto editComment(Long postId, Long commentId, CommentRequestDto requestDto) {
 
         //게시글 확인
-        Post post = checkPost(postId);
+        checkPost(postId);
 
         //수정할 정보 변수에 담기
         String reply = requestDto.getReply();
@@ -66,7 +61,7 @@ public class CommentServiceImpl implements CommentService{
     public void deleteComment(Long postId, Long commentId, Member member) {
 
         // 게시글 확인
-        Post post = checkPost(postId);
+        checkPost(postId);
 
         String username = member.getUsername();
         UserRoleEnum role = member.getRole();

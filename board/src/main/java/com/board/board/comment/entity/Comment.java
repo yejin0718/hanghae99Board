@@ -3,7 +3,6 @@ package com.board.board.comment.entity;
 import com.board.board.global.Timestamped;
 
 import com.board.board.like.entity.LikeComment;
-import com.board.board.post.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +12,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Optional;
 
 @Entity
 @Getter
@@ -31,6 +29,11 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String username;
 
+
+    @OneToMany
+    @JoinColumn(name = "commentId")
+    private List<LikeComment> likeCommentList = new ArrayList<>();
+
     private Long likeCount = 0L;
 
 
@@ -42,4 +45,16 @@ public class Comment extends Timestamped {
         this.reply = reply;
     }
 
+    public void addLike(LikeComment likeComment) {
+        this.likeCommentList.add(likeComment);
+    }
+
+    public void increaseLike() {
+        this.likeCount++;
+    }
+
+
+    public void reductionLike() {
+        this.likeCount--;
+    }
 }

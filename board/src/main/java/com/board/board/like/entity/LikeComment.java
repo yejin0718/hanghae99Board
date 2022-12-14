@@ -13,4 +13,10 @@ public class LikeComment {
     private Long id;
 
     private String username;
+
+    private Long commentId;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
