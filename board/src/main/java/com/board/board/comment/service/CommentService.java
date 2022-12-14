@@ -9,4 +9,6 @@ public interface CommentService {
     CommentResponseDto writeComment(Long postId, CommentRequestDto requestDto, Member member);
 
     CommentResponseDto editComment(Long postId, Long commentId, CommentRequestDto requestDto, Member member);
+
+    void deleteComment(Long postId, Long commentId, Member member);
 }

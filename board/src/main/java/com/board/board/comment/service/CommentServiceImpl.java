@@ -49,6 +49,9 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     public CommentResponseDto editComment(Long postId, Long commentId, CommentRequestDto requestDto, Member member) {
 
+        //게시글 확인
+        Post post = checkPost(postId);
+
         //수정할 정보 변수에 담기
         String reply = requestDto.getReply();
 
@@ -56,10 +59,34 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = checkComment(commentId);
         comment.update(reply);
 
-        //게시글 확인
-        Post post = checkPost(postId);
 
         return new CommentResponseDto(comment);
+    }
+
+    @Override
+    public void deleteComment(Long postId, Long commentId, Member member) {
+
+        // 게시글 확인
+        Post post = checkPost(postId);
+
+        String username = member.getUsername();
+        UserRoleEnum role = member.getRole();
+
+        Comment comment = checkComment(commentId);
+
+        /* 유저 권한 체크 */
+        checkRole(comment, role, username);
+
+        commentRepository.delete(comment);
+    }
+
+    /* 유저 권한 체크 메서드 */
+    private void checkRole(Comment comment, UserRoleEnum role, String username) {
+        if(role != UserRoleEnum.ADMIN){
+            if(!comment.getUsername().equals(username)){
+                throw new IllegalArgumentException("게시물의 권한이 없습니다.");
+            }
+        }
     }
 
     private Comment checkComment(Long commentId){

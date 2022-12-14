@@ -34,7 +34,7 @@ public class Comment extends Timestamped {
     private Long likeCount = 0L;
 
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<LikeComment> commentLike = new ArrayList<>();
 
 
