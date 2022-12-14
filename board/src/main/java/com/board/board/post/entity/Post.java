@@ -12,6 +12,7 @@ import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -39,12 +40,14 @@ public class Post extends Timestamped {
     @JoinColumn(name = "postId")
     private List<Comment> commentList = new ArrayList<>();
 
-    @Column
-    private Long likeCount = 0L;
+
 
     @OneToMany
     @JoinColumn(name = "postId")
     private List<LikePost> postLikeList = new ArrayList<>();
+
+    private Long likeCount = 0L;
+
 
     public void update(String title, String content) {
         this.title = title;

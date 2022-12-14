@@ -1,16 +1,19 @@
 package com.board.board.comment.entity;
 
 import com.board.board.global.Timestamped;
+
 import com.board.board.like.entity.LikeComment;
+import com.board.board.post.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -22,17 +25,21 @@ public class Comment extends Timestamped {
     @GeneratedValue
     private Long id;
 
-
     @Column(nullable = false)
     private String reply;
 
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
-    private Long likeCount;
+    private Long likeCount = 0L;
+
 
     @OneToMany
     private List<LikeComment> commentLike = new ArrayList<>();
+
+
+    public void update(String reply) {
+        this.reply = reply;
+    }
 
 }
