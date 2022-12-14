@@ -54,7 +54,6 @@ public class PostController {
             @RequestBody PostRequestDto requestDto,
             @AuthenticationPrincipal MemberDetailsImpl memberDetails){
 
-
         PostResponseDto postResponseDto = postService.editPost(postId, requestDto, memberDetails.getMember());
         ResponseMessage responseMessage = new ResponseMessage("게시글 수정 성공", 200, postResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);

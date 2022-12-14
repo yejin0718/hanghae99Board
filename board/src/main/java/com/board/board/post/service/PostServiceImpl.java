@@ -1,5 +1,6 @@
 package com.board.board.post.service;
 
+import com.board.board.comment.entity.Comment;
 import com.board.board.global.config.UserRoleEnum;
 import com.board.board.member.entity.Member;
 import com.board.board.member.repository.MemberRepository;
@@ -44,7 +45,7 @@ public class PostServiceImpl implements PostService{
     @Override
     @Transactional
     public PostResponseDto writePost(PostRequestDto requestDto, String username){
-
+        
         Member member = memberRepository.findByUsername(username).orElseThrow(()->new IllegalArgumentException("로그인이 필요합니다."));
 
         Post post = requestDto.toEntity(username);//username은 request에 포함이 안되므로 따로 추가해줘야한다.

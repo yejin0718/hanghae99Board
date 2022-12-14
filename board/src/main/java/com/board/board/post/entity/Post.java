@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -40,8 +41,7 @@ public class Post extends Timestamped {
     @OneToMany
     private List<Comment> commentList;
 
-    @Column(nullable = false)
-    private Long likeCount;
+    private Long likeCount = 0L;
 
     public void update(String title, String content) {
         this.title = title;
