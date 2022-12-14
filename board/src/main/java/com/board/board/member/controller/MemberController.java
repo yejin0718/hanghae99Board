@@ -10,9 +10,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,7 +35,16 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ResponseMessage> signup(@RequestBody MemberRequestDto memberRequestDto){
+    public ResponseEntity<ResponseMessage> signup(@RequestBody @Valid MemberRequestDto memberRequestDto, Errors errors){
+        if(errors.hasErrors()){
+            Map<String, String> validatorResult = memberService.validateHandling(errors);
+            StringBuilder temp = new StringBuilder();
+            for (String key : validatorResult.keySet()) {
+                temp.append(key + " " + validatorResult.get(key) + "\n");
+//                model.addAttribute(key, validatorResult.get(key));
+            }
+            throw new IllegalArgumentException(temp.toString());
+        }
         memberService.signup(memberRequestDto);
         ResponseMessage responseMessage = new ResponseMessage("회원가입 성공", 200, null);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
