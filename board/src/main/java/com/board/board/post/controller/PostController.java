@@ -1,7 +1,6 @@
 package com.board.board.post.controller;
 
 import com.board.board.global.ResponseMessage;
-import com.board.board.global.config.UserRoleEnum;
 import com.board.board.global.security.MemberDetailsImpl;
 import com.board.board.post.dto.PostRequestDto;
 import com.board.board.post.dto.PostResponseDto;

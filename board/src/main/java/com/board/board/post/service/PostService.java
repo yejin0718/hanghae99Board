@@ -1,6 +1,5 @@
 package com.board.board.post.service;
 
-import com.board.board.global.config.UserRoleEnum;
 import com.board.board.member.entity.Member;
 import com.board.board.post.dto.PostRequestDto;
 import com.board.board.post.dto.PostResponseDto;
