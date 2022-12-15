@@ -34,7 +34,7 @@
 <img width="706" alt="image" src="https://user-images.githubusercontent.com/105099062/207764889-75804270-a6b4-41dd-8796-a53a5980aa49.png">
 
 #### 변경 후
-![123](https://user-images.githubusercontent.com/110963294/207844025-49c62f86-ddbf-4f70-883a-2cfdddf5d214.jpg)
+<img width="706" alt="image" src="https://user-images.githubusercontent.com/110963294/207844025-49c62f86-ddbf-4f70-883a-2cfdddf5d214.jpg">
 
 
 #### ❓변경 이유
