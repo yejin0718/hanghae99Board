@@ -50,7 +50,7 @@ public class WebSecurityConfig {
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/swagger**").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
