@@ -5,15 +5,16 @@ import com.board.board.comment.dto.CommentResponseDto;
 import com.board.board.comment.service.CommentService;
 import com.board.board.global.ResponseMessage;
 import com.board.board.global.security.MemberDetailsImpl;
-import com.board.board.post.dto.PostRequestDto;
-import com.board.board.post.dto.PostResponseDto;
-import com.board.board.post.service.PostService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+@Api(tags = {"댓글 API Controller"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/post")
@@ -21,12 +22,12 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    //댓글작성
+    @ApiOperation(value = "댓글 작성")
     @PostMapping("/{postId}/comment")
     public ResponseEntity<ResponseMessage> writeComment(
             @PathVariable Long postId,
             @RequestBody CommentRequestDto requestDto,
-            @AuthenticationPrincipal MemberDetailsImpl memberDetails){
+            @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails){
 
         CommentResponseDto commentResponseDto = commentService.writeComment(postId, requestDto, memberDetails.getMember());
 
@@ -35,23 +36,25 @@ public class CommentController {
 
     }
 
+    @ApiOperation(value = "댓글 수정")
     @PatchMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<ResponseMessage> editComment(
             @PathVariable Long postId,
             @PathVariable Long commentId,
             @RequestBody CommentRequestDto requestDto,
-            @AuthenticationPrincipal MemberDetailsImpl memberDetails){
+            @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails){
         CommentResponseDto commentResponseDto = commentService.editComment(postId, commentId, requestDto);
 
         ResponseMessage responseMessage = new ResponseMessage("댓글 수정 성공", 200, commentResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "댓글 삭제")
     @DeleteMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<ResponseMessage> deleteComment(
             @PathVariable Long postId,
             @PathVariable Long commentId,
-            @AuthenticationPrincipal MemberDetailsImpl memberDetails
+            @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails
     ) {
         commentService.deleteComment(postId, commentId, memberDetails.getMember());
 

@@ -6,6 +6,8 @@ import com.board.board.global.jwt.JwtUtil;
 import com.board.board.global.security.MemberDetailsImpl;
 import com.board.board.member.dto.MemberRequestDto;
 import com.board.board.member.service.MemberService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Map;
 
+@Api(tags = {"유저 API Controller"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
@@ -24,6 +27,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @ApiOperation(value = "로그인")
     @PostMapping("/login")
     public ResponseEntity<ResponseMessage> login(@RequestBody MemberRequestDto memberRequestDto, HttpServletResponse response){
         String token = memberService.login(memberRequestDto);
@@ -34,6 +38,7 @@ public class MemberController {
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
     public ResponseEntity<ResponseMessage> signup(@RequestBody @Valid MemberRequestDto memberRequestDto, Errors errors){
         if(errors.hasErrors()){

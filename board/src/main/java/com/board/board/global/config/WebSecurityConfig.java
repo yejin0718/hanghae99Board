@@ -47,6 +47,11 @@ public class WebSecurityConfig {
 
         http.authorizeRequests().antMatchers("/member/**").permitAll() //유저 관련 url 허용
                 .antMatchers("/post/**").permitAll() //게시물 관련 url 모두 허용
+                // 스웨거 관련 url 허용
+                .antMatchers("/v2/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/swagger**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
 
 //                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
