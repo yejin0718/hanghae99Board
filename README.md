@@ -34,7 +34,8 @@
 <img width="706" alt="image" src="https://user-images.githubusercontent.com/105099062/207764889-75804270-a6b4-41dd-8796-a53a5980aa49.png">
 
 #### 변경 후
-<img width="711" alt="image" src="https://user-images.githubusercontent.com/105099062/207764935-c13c3505-1b89-407c-967f-0bb3ba62da42.png">
+![123](https://user-images.githubusercontent.com/110963294/207844025-49c62f86-ddbf-4f70-883a-2cfdddf5d214.jpg)
+
 
 #### ❓변경 이유
 - 유지보수 시 비용이 많이 듬. → 연관관계 편의 메서드가 많아짐으로써 복잡하고 Service 코드가 길어짐.
