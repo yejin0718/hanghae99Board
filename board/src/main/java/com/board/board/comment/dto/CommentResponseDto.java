@@ -17,10 +17,9 @@ public class CommentResponseDto {
     private String reply;
     private Long likeCount;
     private LocalDateTime createdAt;
-    private List<LikeComment> checkCommentLike = new ArrayList<>();
     private boolean isCommentLike;
 
-    private List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+    private List<CommentResponseDto> reCommentList = new ArrayList<>();
 
     public CommentResponseDto (Comment comment){
         this.id = comment.getId();
@@ -28,23 +27,25 @@ public class CommentResponseDto {
         this.reply = comment.getReply();
         this.likeCount = comment.getLikeCount();
         this.createdAt =comment.getCreatedAt();
-        List<Comment> commentList = comment.getCommentList();
-        if(!commentList.isEmpty()){
-            for(Comment temp : commentList){
-                this.commentResponseDtoList.add(new CommentResponseDto(temp));
-            }
-        }
     }
 
     public CommentResponseDto (Comment comment, String username){
         this(comment);
         this.isCommentLike = false;
 
-        for (LikeComment likeComment : checkCommentLike) {
+        List<Comment> commentList = comment.getCommentList();
+        if(!commentList.isEmpty()){
+            for(Comment temp : commentList){
+                this.reCommentList.add(new CommentResponseDto(temp, username));
+            }
+        }
+
+        for (LikeComment likeComment : comment.getCommentLike()) {
             if (!isCommentLike && likeComment.getUsername().equals(username)) {
                 this.isCommentLike = true;
                 break;
             }
         }
+
     }
 }

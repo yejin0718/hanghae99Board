@@ -26,7 +26,7 @@ public class PostController {
     @ApiOperation(value = "게시글 전체 조회")
     @GetMapping
     public ResponseEntity<ResponseMessage> getPostList(@ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
-        PostResponseListDto postList = postService.getPostList();
+        PostResponseListDto postList = postService.getPostList(memberDetails.getUsername());
         ResponseMessage responseMessage = new ResponseMessage("전체 게시글 목록 조회 성공", 200, postList);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
@@ -36,7 +36,7 @@ public class PostController {
     public ResponseEntity<ResponseMessage> getPostInfo(
             @PathVariable Long postId,
             @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
-        PostResponseDto postResponseDto = postService.getPostInfo(postId);
+        PostResponseDto postResponseDto = postService.getPostInfo(postId, memberDetails.getUsername());
         ResponseMessage responseMessage = new ResponseMessage("상세 게시글 조회 성공", 200, postResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
