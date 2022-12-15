@@ -68,4 +68,21 @@ public class CommentController {
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
+
+    @ApiOperation(value = "대댓글")
+    /* 댓글작성 */
+    @PostMapping("/{postId}/comment/{commentId}")
+    public ResponseEntity<ResponseMessage> CreateReComment(
+            @PathVariable Long commentId,
+            @RequestBody CommentRequestDto requestDto,
+            @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails){
+
+        CommentResponseDto commentResponseDto = commentService.writeReComment(commentId, requestDto, memberDetails.getMember());
+
+        ResponseMessage responseMessage = new ResponseMessage("대댓글 작성 성공", 200, commentResponseDto);
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+
+    }
+
+
 }

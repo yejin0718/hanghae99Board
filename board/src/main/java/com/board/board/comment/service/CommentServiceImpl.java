@@ -68,6 +68,18 @@ public class CommentServiceImpl implements CommentService{
         commentRepository.delete(comment);
     }
 
+    @Override
+    @Transactional
+    public CommentResponseDto writeReComment(Long commentId, CommentRequestDto requestDto, Member member){
+        Comment comment = requestDto.toEntity(member.getUsername());
+        comment = commentRepository.save(comment);
+        Comment parentComment = checkComment(commentId);
+
+        parentComment.addComment(comment);
+        System.out.println("CommentServiceImpl.writeReComment");
+        return new CommentResponseDto(comment);
+    }
+
     /* 유저 권한 확인  */
     private void checkRole(Comment comment, UserRoleEnum role, String username) {
         if(role != UserRoleEnum.ADMIN){
@@ -89,6 +101,8 @@ public class CommentServiceImpl implements CommentService{
                 ()-> new IllegalArgumentException("존재하지 않은 게시물입니다.")
         );
     }
+
+
 
 
 }
