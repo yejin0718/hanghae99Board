@@ -17,30 +17,23 @@
 
 ## Tech Stack
 ### Back-End
-<img src="https://img.shields.io/badge/Swagger-green?style=for-the-badge&logo=Swagger&logoColor=white"/>
-<img alt="Java" src ="https://img.shields.io/badge/Java-007396.svg?&style=for-the-badge&logo=Java&logoColor=white"/>
-<img src="https://img.shields.io/badge/MySQL-4479A1.svg?&style=for-the-badge&logo=MySQL&logoColor=white">
-<img src="https://img.shields.io/badge/Spring Boot-6DB33F.svg?&style=for-the-badge&logo=Spring Boot&logoColor=white">
-<img src="https://img.shields.io/badge/Spring Security-6DB33F.svg?&style=for-the-badge&logo=Spring Security&logoColor=white">
-<img src="https://img.shields.io/badge/JWT-000000.svg?&style=for-the-badge&logo=JSON Web Tokens&logoColor=white">
-<img src="https://img.shields.io/badge/Gradle-02303A.svg?&style=for-the-badge&logo=Gradle&logoColor=white">
-<img src="https://img.shields.io/badge/Amazon RDS-527FFF.svg?&style=for-the-badge&logo=Amazon RDS&logoColor=white">
+<img src="https://img.shields.io/badge/Swagger-green?style=for-the-badge&logo=Swagger&logoColor=white"/> <img alt="Java" src ="https://img.shields.io/badge/Java-007396.svg?&style=for-the-badge&logo=Java&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1.svg?&style=for-the-badge&logo=MySQL&logoColor=white"> <img src="https://img.shields.io/badge/Spring Boot-6DB33F.svg?&style=for-the-badge&logo=Spring Boot&logoColor=white"> <img src="https://img.shields.io/badge/Spring Security-6DB33F.svg?&style=for-the-badge&logo=Spring Security&logoColor=white"> <img src="https://img.shields.io/badge/JWT-000000.svg?&style=for-the-badge&logo=JSON Web Tokens&logoColor=white"> <img src="https://img.shields.io/badge/Gradle-02303A.svg?&style=for-the-badge&logo=Gradle&logoColor=white"> <img src="https://img.shields.io/badge/Amazon RDS-527FFF.svg?&style=for-the-badge&logo=Amazon RDS&logoColor=white">
 
 ### Deploy
 <img src="https://img.shields.io/badge/Amazon EC2-yellow?style=for-the-badge&logo=Amazon EC2&logoColor=white">
 
 ## ERD
 ### LV1
-![img.png](img.png)
+<img width="708" alt="image" src="https://user-images.githubusercontent.com/105099062/207764913-50111052-2896-4784-90ae-d3d0eaa77b46.png">
 
 
 
 ### LV2
 #### 변경 전
-![img_2.png](img_2.png)
+<img width="706" alt="image" src="https://user-images.githubusercontent.com/105099062/207764889-75804270-a6b4-41dd-8796-a53a5980aa49.png">
 
 #### 변경 후
-![img_1.png](img_1.png)
+<img width="711" alt="image" src="https://user-images.githubusercontent.com/105099062/207764935-c13c3505-1b89-407c-967f-0bb3ba62da42.png">
 
 #### ❓변경 이유
 - 유지보수 시 비용이 많이 듬. → 연관관계 편의 메서드가 많아짐으로써 복잡하고 Service 코드가 길어짐.
@@ -57,7 +50,7 @@
 - **Pull Request할 때 대상이 Develop인지 Main인지 확인하기!!!**
 
 ## 📍 Commit Message Convention
-![img_3.png](img_3.png)
+<img width="718" alt="image" src="https://user-images.githubusercontent.com/105099062/207764961-561da103-398d-42fa-8a48-85fc0135c990.png">
 출처 : https://overcome-the-limits.tistory.com/entry/협업-협업을-위한-기본적인-git-커밋컨벤션-설정하기
 
 ## 📍Reference Site
