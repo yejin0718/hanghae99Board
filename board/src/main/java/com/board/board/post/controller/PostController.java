@@ -25,17 +25,19 @@ public class PostController {
 
     @ApiOperation(value = "게시글 전체 조회")
     @GetMapping
-    public ResponseEntity<ResponseMessage> getPostList(){
+    public ResponseEntity<ResponseMessage> getPostList(@ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
         PostResponseListDto postList = postService.getPostList();
-        ResponseMessage responseMessage = new ResponseMessage( "전체 게시글 목록 조회 성공", 200, postList);
+        ResponseMessage responseMessage = new ResponseMessage("전체 게시글 목록 조회 성공", 200, postList);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
     @ApiOperation(value = "게시글 상세 조회")
     @GetMapping("/{postId}")
-    public ResponseEntity<ResponseMessage> getPostInfo(@PathVariable Long postId){
+    public ResponseEntity<ResponseMessage> getPostInfo(
+            @PathVariable Long postId,
+            @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
         PostResponseDto postResponseDto = postService.getPostInfo(postId);
-        ResponseMessage responseMessage = new ResponseMessage( "상세 게시글 조회 성공", 200, postResponseDto);
+        ResponseMessage responseMessage = new ResponseMessage("상세 게시글 조회 성공", 200, postResponseDto);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
@@ -43,7 +45,7 @@ public class PostController {
     @PostMapping
     public ResponseEntity<ResponseMessage> writePost(
             @RequestBody PostRequestDto requestDto,
-            @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails){
+            @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
 
         PostResponseDto postResponseDto = postService.writePost(requestDto, memberDetails.getUsername());
 
@@ -56,7 +58,7 @@ public class PostController {
     public ResponseEntity<ResponseMessage> editPost(
             @PathVariable Long postId,
             @RequestBody PostRequestDto requestDto,
-            @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails){
+            @ApiIgnore @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
 
         PostResponseDto postResponseDto = postService.editPost(postId, requestDto, memberDetails.getMember());
         ResponseMessage responseMessage = new ResponseMessage("게시글 수정 성공", 200, postResponseDto);

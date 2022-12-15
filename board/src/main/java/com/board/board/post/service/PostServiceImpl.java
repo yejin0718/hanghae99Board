@@ -1,6 +1,7 @@
 package com.board.board.post.service;
 
 import com.board.board.global.config.UserRoleEnum;
+import com.board.board.global.security.MemberDetailsImpl;
 import com.board.board.member.entity.Member;
 import com.board.board.member.repository.MemberRepository;
 import com.board.board.post.dto.PostRequestDto;
@@ -23,11 +24,12 @@ public class PostServiceImpl implements PostService{
     /* 전체 게시물 목록 조회 */
     @Override
     @Transactional(readOnly = true)
-    public PostResponseListDto getPostList() {
+    public PostResponseListDto getPostList(String username) {
+
         PostResponseListDto postList = new PostResponseListDto();
         List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
         for(Post post : posts) {
-            postList.addPost(new PostResponseDto(post));
+            postList.addPost(new PostResponseDto(post, username));
         }
         return postList;
     }
@@ -35,17 +37,17 @@ public class PostServiceImpl implements PostService{
     /* 게시물 상세 조회 */
     @Override
     @Transactional(readOnly = true)
-    public PostResponseDto getPostInfo(Long postId) {
+    public PostResponseDto getPostInfo(Long postId, String username) {
         Post post = checkPost(postId);
-        return new PostResponseDto(post);
+        return new PostResponseDto(post, username);
     }
 
     /* 게시물 작성 */
     @Override
     @Transactional
     public PostResponseDto writePost(PostRequestDto requestDto, String username){
-        
-        Member member = memberRepository.findByUsername(username).orElseThrow(()->new IllegalArgumentException("로그인이 필요합니다."));
+
+        checkMember(username);
 
         Post post = requestDto.toEntity(username);//username은 request에 포함이 안되므로 따로 추가해줘야한다.
 
@@ -96,6 +98,11 @@ public class PostServiceImpl implements PostService{
         return postRepository.findById(postId).orElseThrow(
                 ()-> new IllegalArgumentException("존재하지 않은 게시물입니다.")
         );
+    }
+
+    private Member checkMember(String username) {
+        return memberRepository.findByUsername(username)
+                .orElseThrow(()->new IllegalArgumentException("로그인이 필요합니다."));
     }
 
     /* 게시물 권환 확인 */

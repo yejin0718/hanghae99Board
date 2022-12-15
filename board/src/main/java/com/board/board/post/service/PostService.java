@@ -6,9 +6,9 @@ import com.board.board.post.dto.PostResponseDto;
 import com.board.board.post.dto.PostResponseListDto;
 
 public interface PostService {
-    PostResponseListDto getPostList();
+    PostResponseListDto getPostList(String username);
 
-    PostResponseDto getPostInfo(Long postId);
+    PostResponseDto getPostInfo(Long postId, String username);
 
     void deletePost(Long postId, Member member);
 
