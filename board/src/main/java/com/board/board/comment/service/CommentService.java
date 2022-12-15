@@ -13,4 +13,5 @@ public interface CommentService {
 
     CommentResponseDto editComment(Long postId, Long commentId, CommentRequestDto requestDto);
 
+    CommentResponseDto writeReComment(Long commentId, CommentRequestDto requestDto, Member member);
 }

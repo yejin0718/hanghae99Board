@@ -34,12 +34,19 @@ public class Comment extends Timestamped {
     @JoinColumn(name = "commentId")
     private List<LikeComment> likeCommentList = new ArrayList<>();
 
+    @Builder.Default
     private Long likeCount = 0L;
 
 
     @OneToMany
+    @Builder.Default
+    @JoinColumn(name = "commentId")
     private List<LikeComment> commentLike = new ArrayList<>();
 
+    @OneToMany
+    @Builder.Default
+    @JoinColumn(name = "commentId")
+    private List<Comment> commentList = new ArrayList<>();
 
     public void update(String reply) {
         this.reply = reply;
@@ -57,5 +64,9 @@ public class Comment extends Timestamped {
 
     public void reductionLike() {
         this.likeCount--;
+    }
+
+    public void addComment(Comment comment) {
+        this.commentList.add(comment);
     }
 }
