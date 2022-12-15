@@ -66,6 +66,7 @@ public class Post extends Timestamped {
 
     public void addLike(LikePost likePost){
         this.postLikeList.add(likePost);
+        increaseLike();
 
     }
 

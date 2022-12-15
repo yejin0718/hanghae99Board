@@ -47,6 +47,7 @@ public class Comment extends Timestamped {
 
     public void addLike(LikeComment likeComment) {
         this.likeCommentList.add(likeComment);
+        increaseLike();
     }
 
     public void increaseLike() {

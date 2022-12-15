@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
-
 @Getter
 @ApiModel(value = "게시글 관련 요청 정보")
 public class PostRequestDto {

@@ -10,8 +10,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExceptionResponse {
-    private Date date; //에러 날짜
-    private String msg; //예외 메시지
-    private String content; //예외가 어느 요청에서 났는지 확인
+    private Date date;
+    private String msg;
+
+    /* 예외가 어디서 났는지 확인 */
+    private String content;
 
 }

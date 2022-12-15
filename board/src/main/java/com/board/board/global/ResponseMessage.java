@@ -14,6 +14,7 @@ public class ResponseMessage {
 
     @ApiModelProperty(value = "상태 코드", dataType = "int", example = "200")
     private int statusCode;
+
     /* Dto 데이터 추가 */
     @ApiModelProperty(value = "해당 요청에 대한 응답 데이터", dataType = "Object", example = "null or 해당 요청 데이터")
     private Object data;

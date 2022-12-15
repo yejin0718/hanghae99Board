@@ -22,7 +22,9 @@ public class CommentController {
 
     private final CommentService commentService;
 
+
     @ApiOperation(value = "댓글 작성")
+    /* 댓글작성 */
     @PostMapping("/{postId}/comment")
     public ResponseEntity<ResponseMessage> writeComment(
             @PathVariable Long postId,
@@ -36,7 +38,9 @@ public class CommentController {
 
     }
 
+
     @ApiOperation(value = "댓글 수정")
+    /* 댓글수정 */
     @PatchMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<ResponseMessage> editComment(
             @PathVariable Long postId,
@@ -49,7 +53,9 @@ public class CommentController {
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
+
     @ApiOperation(value = "댓글 삭제")
+    /* 댓글삭제 */
     @DeleteMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<ResponseMessage> deleteComment(
             @PathVariable Long postId,

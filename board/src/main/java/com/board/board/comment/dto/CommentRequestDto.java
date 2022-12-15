@@ -13,8 +13,5 @@ public class CommentRequestDto {
     @ApiModelProperty(value = "댓글 내용", dataType = "String", example = "댓글1")
     private String reply;
 
-    public Comment toEntity(String username){
-        System.out.println("reply = " + reply);
-        return Comment.builder().username(username).likeCount(0L).reply(reply).build();
-    }
+    public Comment toEntity(String username){return Comment.builder().username(username).likeCount(0L).reply(reply).build();}
 }

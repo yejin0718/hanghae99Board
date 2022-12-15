@@ -21,12 +21,5 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
-    /*
-    * 커스텀 예시
-    * @ExceptionHandler({NotFoundException.class})
-    * public final ResponseEntity<Object> NotFoundException(Exception e, WebRequest request) {
-    *    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
-    *    return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
-    *}
-    */
+
 }
