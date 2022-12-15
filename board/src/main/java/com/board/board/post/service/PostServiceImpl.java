@@ -91,16 +91,13 @@ public class PostServiceImpl implements PostService{
 
 
 
-
-
-
-
     /* 게시물 확인 */
     private Post checkPost(Long postId){
         return postRepository.findById(postId).orElseThrow(
                 ()-> new IllegalArgumentException("존재하지 않은 게시물입니다.")
         );
     }
+
     /* 게시물 권환 확인 */
     private void checkRole(Post post, UserRoleEnum role, String username){
         if(role != UserRoleEnum.ADMIN){

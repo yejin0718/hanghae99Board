@@ -19,7 +19,6 @@ public class LikeService {
     private final LikePostRepository likePostRepository;
     private final LikeCommentRepository likeCommentRepository;
     private final PostRepository postRepository;
-
     private final CommentRepository commentRepository;
 
 
@@ -30,11 +29,9 @@ public class LikeService {
                 ()-> new IllegalArgumentException("게시물을 찾을 수 없습니다."));
 
         if(likeComment == null){
-            likeComment = new LikeComment();
-            likeComment.setUsername(username);
+            likeComment = new LikeComment(username);
             likeCommentRepository.save(likeComment);
             comment.addLike(likeComment);
-            comment.increaseLike();
             return true;
         }else {
             comment.reductionLike();
@@ -50,11 +47,9 @@ public class LikeService {
                 ()-> new IllegalArgumentException("게시물을 찾을 수 없습니다."));
 
         if(likePost == null){
-            likePost = new LikePost();
-            likePost.setUsername(username);
+            likePost = new LikePost(username);
             likePostRepository.save(likePost);
             post.addLike(likePost);
-            post.increaseLike();
             return true;
         }else{
             post.reductionLike();

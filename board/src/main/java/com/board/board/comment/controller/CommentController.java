@@ -5,9 +5,6 @@ import com.board.board.comment.dto.CommentResponseDto;
 import com.board.board.comment.service.CommentService;
 import com.board.board.global.ResponseMessage;
 import com.board.board.global.security.MemberDetailsImpl;
-import com.board.board.post.dto.PostRequestDto;
-import com.board.board.post.dto.PostResponseDto;
-import com.board.board.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +18,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    //댓글작성
+    /* 댓글작성 */
     @PostMapping("/{postId}/comment")
     public ResponseEntity<ResponseMessage> writeComment(
             @PathVariable Long postId,
@@ -35,6 +32,7 @@ public class CommentController {
 
     }
 
+    /* 댓글수정 */
     @PatchMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<ResponseMessage> editComment(
             @PathVariable Long postId,
@@ -47,6 +45,7 @@ public class CommentController {
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
+    /* 댓글삭제 */
     @DeleteMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<ResponseMessage> deleteComment(
             @PathVariable Long postId,

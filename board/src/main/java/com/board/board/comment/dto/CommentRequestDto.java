@@ -8,8 +8,5 @@ public class CommentRequestDto {
 
     private String reply;
 
-    public Comment toEntity(String username){
-        System.out.println("reply = " + reply);
-        return Comment.builder().username(username).likeCount(0L).reply(reply).build();
-    }
+    public Comment toEntity(String username){return Comment.builder().username(username).likeCount(0L).reply(reply).build();}
 }

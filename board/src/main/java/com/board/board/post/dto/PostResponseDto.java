@@ -26,7 +26,8 @@ public class PostResponseDto {
         this.content = post.getContent();
         this.username = post.getUsername();
         this.createdAt = post.getCreatedAt();
-        if(post.getCommentList() != null)
-        this.commentResponseDtoList = post.getCommentList().stream().map(CommentResponseDto::new).collect(Collectors.toList());
+        if(post.getCommentList() != null) {
+            this.commentResponseDtoList = post.getCommentList().stream().map(CommentResponseDto::new).collect(Collectors.toList());
+        }
     }
 }

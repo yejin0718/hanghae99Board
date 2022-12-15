@@ -20,35 +20,30 @@ public class CommentServiceImpl implements CommentService{
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
 
-    //댓글 작성
+    /* 댓글 작성 */
     @Override
     @Transactional
     public CommentResponseDto writeComment(Long postId, CommentRequestDto requestDto, Member member){
 
-        //댓글 저장
         Comment comment = requestDto.toEntity(member.getUsername());
         commentRepository.save(comment);
 
-        //post 찾기
         Post post = checkPost(postId);
 
-        //post Entity에 commentList 저장
         post.addComment(comment);
 
         return new CommentResponseDto(comment);
     }
 
+    /* 댓글 수정 */
     @Override
     @Transactional
     public CommentResponseDto editComment(Long postId, Long commentId, CommentRequestDto requestDto) {
 
-        //게시글 확인
         checkPost(postId);
 
-        //수정할 정보 변수에 담기
         String reply = requestDto.getReply();
 
-        //댓글 확인, 수정
         Comment comment = checkComment(commentId);
         comment.update(reply);
 
@@ -56,11 +51,11 @@ public class CommentServiceImpl implements CommentService{
         return new CommentResponseDto(comment);
     }
 
+    /* 댓글 삭제 */
     @Override
     @Transactional
     public void deleteComment(Long postId, Long commentId, Member member) {
 
-        // 게시글 확인
         checkPost(postId);
 
         String username = member.getUsername();
@@ -68,7 +63,6 @@ public class CommentServiceImpl implements CommentService{
 
         Comment comment = checkComment(commentId);
 
-        /* 유저 권한 체크 */
         checkRole(comment, role, username);
 
         commentRepository.delete(comment);
@@ -82,6 +76,7 @@ public class CommentServiceImpl implements CommentService{
             }
         }
     }
+
     /* 댓글 확인  */
     private Comment checkComment(Long commentId){
         return commentRepository.findById(commentId).orElseThrow(
