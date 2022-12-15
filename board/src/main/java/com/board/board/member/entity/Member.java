@@ -32,12 +32,6 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-    @OneToMany(mappedBy = "member")
-    private List<Post> postList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member")
-    private List<Comment> commentList = new ArrayList<>();
-
 
     public Member(String username, String password, UserRoleEnum role) {
         this.username = username;
@@ -45,12 +39,4 @@ public class Member {
         this.role = role;
     }
 
-    /* 연관관계 편의 메서드 */
-    public void addPostList(Post post){
-        this.postList.add(post);
-    }
-
-    public void addCommentList(Comment comment){
-        this.commentList.add(comment);
-    }
 }
