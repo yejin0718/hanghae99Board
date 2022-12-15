@@ -26,8 +26,8 @@ public class PostController {
     @ApiOperation(value = "게시글 전체 조회")
     @GetMapping
     public ResponseEntity<ResponseMessage> getPostList(){
-        PostResponseListDto postResponseListDto = postService.getPostList();
-        ResponseMessage responseMessage = new ResponseMessage( "전체 게시글 목록 조회 성공", 200, postResponseListDto);
+        PostResponseListDto postList = postService.getPostList();
+        ResponseMessage responseMessage = new ResponseMessage( "전체 게시글 목록 조회 성공", 200, postList);
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 

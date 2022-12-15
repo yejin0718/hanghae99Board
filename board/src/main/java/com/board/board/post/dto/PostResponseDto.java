@@ -17,17 +17,20 @@ public class PostResponseDto {
     private String title;
     private String content;
     private String username;
+
+    private Long likeCount;
     private LocalDateTime createdAt;
-    private List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+    private List<CommentResponseDto> commentList = new ArrayList<>();
 
     public PostResponseDto(Post post){
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.username = post.getUsername();
+        this.likeCount = post.getLikeCount();
         this.createdAt = post.getCreatedAt();
         if(post.getCommentList() != null) {
-            this.commentResponseDtoList = post.getCommentList().stream().map(CommentResponseDto::new).collect(Collectors.toList());
+            this.commentList = post.getCommentList().stream().map(CommentResponseDto::new).collect(Collectors.toList());
         }
     }
 }

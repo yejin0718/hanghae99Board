@@ -24,12 +24,12 @@ public class PostServiceImpl implements PostService{
     @Override
     @Transactional(readOnly = true)
     public PostResponseListDto getPostList() {
-        PostResponseListDto postResponseListDto = new PostResponseListDto();
+        PostResponseListDto postList = new PostResponseListDto();
         List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
         for(Post post : posts) {
-            postResponseListDto.addPost(new PostResponseDto(post));
+            postList.addPost(new PostResponseDto(post));
         }
-        return postResponseListDto;
+        return postList;
     }
 
     /* 게시물 상세 조회 */
