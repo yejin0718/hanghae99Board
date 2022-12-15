@@ -54,4 +54,4 @@
 출처 : https://overcome-the-limits.tistory.com/entry/협업-협업을-위한-기본적인-git-커밋컨벤션-설정하기
 
 ## 📍Reference Site
-<a href="https://www.notion.so/Algorithm-Study-8dfca127689148d490bb72d3fba46b6a">![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white&link=https://www.notion.so/10-8c45e72928e4478ea1645dd292ff099b#1ef86294da2b42a08df6f4a92ac3436c)</a>
+<a href="https://www.notion.so/10-8c45e72928e4478ea1645dd292ff099b#1ef86294da2b42a08df6f4a92ac3436c">![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white&link=https://www.notion.so/10-8c45e72928e4478ea1645dd292ff099b#1ef86294da2b42a08df6f4a92ac3436c)</a>
